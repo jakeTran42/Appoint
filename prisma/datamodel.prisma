@@ -1,0 +1,8 @@
+type Appointment {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  name: String!
+  time: DateTime!
+  service_description: String!
+  phone_number: Int!
+}
