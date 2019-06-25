@@ -1,17 +1,11 @@
-# prisma.yml is the main configuration file for your Prisma setup
-
 # The HTTP endpoint for your Prisma API
-endpoint: 'http://localhost:4466'
+#endpoint: ''
+endpoint: https://us1.prisma.sh/jake-tran-8115a7/Appoint/dev
 
 # Points to the file that contains your datamodel
 datamodel: datamodel.prisma
-databaseType: document
 
 # Specifies language & location for the generated Prisma client
 generate:
   - generator: javascript-client
-    output: ../prisma/generated/prisma-client
-
-hooks:
-  post-deploy:
-    - prisma generate
+    output: ../src/generated/prisma-client

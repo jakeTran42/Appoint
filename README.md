@@ -12,13 +12,13 @@
 ##### Install commands in **terminal (mac/linux)** or **command prompt (window)** in project directory. 
 
 - [GraphQL Yoga](https://github.com/prisma/graphql-yoga)  ```npm install graphql-yoga```
-- 
 
 
 ### Usage
 
 1. Install NodeJS
 2. Install Prisma CLI
-3. To use Prisma and MongoDB locally (On Mac/Linux), you need to use [Docker](https://www.docker.com/products/container-runtime) and install the community edition. If you are on Window but do not have Window 10 Pro Edition, you need to get [Docker Toolbox](https://docs.docker.com/toolbox/toolbox_install_windows/) and follow instruction for installation.
-4. If you have Docker Toolbox then launch Docker Quick Start, locate ```/prisma``` directory of your project in the docker bash terminal. Enter ```docker-compose up -d``` in docker bash and wait for it to finish initializing db.
-5. Go to root directory and run ```prisma deploy``` in terminal.
+   1. To use Prisma and MongoDB locally (On Mac/Linux), you need to use [Docker](https://www.docker.com/products/container-runtime) and install the community edition. If you are on Window but do not have Window 10 Pro Edition, you need to get [Docker Toolbox](https://docs.docker.com/toolbox/toolbox_install_windows/) and follow instruction for installation.
+   2. If you have Docker Toolbox then launch Docker Quick Start, locate ```/prisma``` directory of your project in the docker bash terminal. Enter ```docker-compose up -d``` in docker bash and wait for it to finish initializing db.
+3. Go to root directory and run ```prisma deploy``` in terminal. **This project will use a demo server hosted by AWS Aurora** 
+4. After the interactive process start, **create a Demo Project** (Must have a prisma Prisma Cloud account)
