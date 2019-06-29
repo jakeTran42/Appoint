@@ -17,6 +17,7 @@ export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
   appointment: (where?: AppointmentWhereInput) => Promise<boolean>;
+  user: (where?: UserWhereInput) => Promise<boolean>;
 }
 
 export interface Node {}
@@ -59,6 +60,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => AppointmentConnectionPromise;
+  user: (where: UserWhereUniqueInput) => UserNullablePromise;
+  users: (args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<User>;
+  usersConnection: (args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => UserConnectionPromise;
   node: (args: { id: ID_Output }) => Node;
 
   /**
@@ -83,6 +103,22 @@ export interface Prisma {
   deleteManyAppointments: (
     where?: AppointmentWhereInput
   ) => BatchPayloadPromise;
+  createUser: (data: UserCreateInput) => UserPromise;
+  updateUser: (args: {
+    data: UserUpdateInput;
+    where: UserWhereUniqueInput;
+  }) => UserPromise;
+  updateManyUsers: (args: {
+    data: UserUpdateManyMutationInput;
+    where?: UserWhereInput;
+  }) => BatchPayloadPromise;
+  upsertUser: (args: {
+    where: UserWhereUniqueInput;
+    create: UserCreateInput;
+    update: UserUpdateInput;
+  }) => UserPromise;
+  deleteUser: (where: UserWhereUniqueInput) => UserPromise;
+  deleteManyUsers: (where?: UserWhereInput) => BatchPayloadPromise;
 
   /**
    * Subscriptions
@@ -95,6 +131,9 @@ export interface Subscription {
   appointment: (
     where?: AppointmentSubscriptionWhereInput
   ) => AppointmentSubscriptionPayloadSubscription;
+  user: (
+    where?: UserSubscriptionWhereInput
+  ) => UserSubscriptionPayloadSubscription;
 }
 
 export interface ClientConstructor<T> {
@@ -110,23 +149,260 @@ export type AppointmentOrderByInput =
   | "id_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
-  | "name_ASC"
-  | "name_DESC"
   | "time_ASC"
   | "time_DESC"
   | "service_description_ASC"
-  | "service_description_DESC"
+  | "service_description_DESC";
+
+export type UserOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "email_ASC"
+  | "email_DESC"
+  | "password_ASC"
+  | "password_DESC"
   | "phone_number_ASC"
   | "phone_number_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface AppointmentCreateInput {
+export interface UserUpdateOneWithoutAppointmentsInput {
+  create?: Maybe<UserCreateWithoutAppointmentsInput>;
+  update?: Maybe<UserUpdateWithoutAppointmentsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutAppointmentsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export type AppointmentWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface AppointmentUpdateWithWhereUniqueWithoutPostedByInput {
+  where: AppointmentWhereUniqueInput;
+  data: AppointmentUpdateWithoutPostedByDataInput;
+}
+
+export interface UserCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
+  email?: Maybe<String>;
+  password: String;
+  phone_number: Int;
+  appointments?: Maybe<AppointmentCreateManyWithoutPostedByInput>;
+}
+
+export interface AppointmentUpdateManyWithoutPostedByInput {
+  create?: Maybe<
+    | AppointmentCreateWithoutPostedByInput[]
+    | AppointmentCreateWithoutPostedByInput
+  >;
+  delete?: Maybe<AppointmentWhereUniqueInput[] | AppointmentWhereUniqueInput>;
+  connect?: Maybe<AppointmentWhereUniqueInput[] | AppointmentWhereUniqueInput>;
+  set?: Maybe<AppointmentWhereUniqueInput[] | AppointmentWhereUniqueInput>;
+  disconnect?: Maybe<
+    AppointmentWhereUniqueInput[] | AppointmentWhereUniqueInput
+  >;
+  update?: Maybe<
+    | AppointmentUpdateWithWhereUniqueWithoutPostedByInput[]
+    | AppointmentUpdateWithWhereUniqueWithoutPostedByInput
+  >;
+  upsert?: Maybe<
+    | AppointmentUpsertWithWhereUniqueWithoutPostedByInput[]
+    | AppointmentUpsertWithWhereUniqueWithoutPostedByInput
+  >;
+  deleteMany?: Maybe<
+    AppointmentScalarWhereInput[] | AppointmentScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | AppointmentUpdateManyWithWhereNestedInput[]
+    | AppointmentUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface UserUpsertWithoutAppointmentsInput {
+  update: UserUpdateWithoutAppointmentsDataInput;
+  create: UserCreateWithoutAppointmentsInput;
+}
+
+export interface UserWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
+  password?: Maybe<String>;
+  password_not?: Maybe<String>;
+  password_in?: Maybe<String[] | String>;
+  password_not_in?: Maybe<String[] | String>;
+  password_lt?: Maybe<String>;
+  password_lte?: Maybe<String>;
+  password_gt?: Maybe<String>;
+  password_gte?: Maybe<String>;
+  password_contains?: Maybe<String>;
+  password_not_contains?: Maybe<String>;
+  password_starts_with?: Maybe<String>;
+  password_not_starts_with?: Maybe<String>;
+  password_ends_with?: Maybe<String>;
+  password_not_ends_with?: Maybe<String>;
+  phone_number?: Maybe<Int>;
+  phone_number_not?: Maybe<Int>;
+  phone_number_in?: Maybe<Int[] | Int>;
+  phone_number_not_in?: Maybe<Int[] | Int>;
+  phone_number_lt?: Maybe<Int>;
+  phone_number_lte?: Maybe<Int>;
+  phone_number_gt?: Maybe<Int>;
+  phone_number_gte?: Maybe<Int>;
+  appointments_every?: Maybe<AppointmentWhereInput>;
+  appointments_some?: Maybe<AppointmentWhereInput>;
+  appointments_none?: Maybe<AppointmentWhereInput>;
+  AND?: Maybe<UserWhereInput[] | UserWhereInput>;
+  OR?: Maybe<UserWhereInput[] | UserWhereInput>;
+  NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
+}
+
+export interface AppointmentSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<AppointmentWhereInput>;
+  AND?: Maybe<
+    AppointmentSubscriptionWhereInput[] | AppointmentSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    AppointmentSubscriptionWhereInput[] | AppointmentSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    AppointmentSubscriptionWhereInput[] | AppointmentSubscriptionWhereInput
+  >;
+}
+
+export interface AppointmentCreateInput {
+  id?: Maybe<ID_Input>;
   time: DateTimeInput;
   service_description: String;
+  postedBy?: Maybe<UserCreateOneWithoutAppointmentsInput>;
+}
+
+export interface AppointmentUpdateManyDataInput {
+  time?: Maybe<DateTimeInput>;
+  service_description?: Maybe<String>;
+}
+
+export interface UserCreateOneWithoutAppointmentsInput {
+  create?: Maybe<UserCreateWithoutAppointmentsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface AppointmentScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  time?: Maybe<DateTimeInput>;
+  time_not?: Maybe<DateTimeInput>;
+  time_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  time_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  time_lt?: Maybe<DateTimeInput>;
+  time_lte?: Maybe<DateTimeInput>;
+  time_gt?: Maybe<DateTimeInput>;
+  time_gte?: Maybe<DateTimeInput>;
+  service_description?: Maybe<String>;
+  service_description_not?: Maybe<String>;
+  service_description_in?: Maybe<String[] | String>;
+  service_description_not_in?: Maybe<String[] | String>;
+  service_description_lt?: Maybe<String>;
+  service_description_lte?: Maybe<String>;
+  service_description_gt?: Maybe<String>;
+  service_description_gte?: Maybe<String>;
+  service_description_contains?: Maybe<String>;
+  service_description_not_contains?: Maybe<String>;
+  service_description_starts_with?: Maybe<String>;
+  service_description_not_starts_with?: Maybe<String>;
+  service_description_ends_with?: Maybe<String>;
+  service_description_not_ends_with?: Maybe<String>;
+  AND?: Maybe<AppointmentScalarWhereInput[] | AppointmentScalarWhereInput>;
+  OR?: Maybe<AppointmentScalarWhereInput[] | AppointmentScalarWhereInput>;
+  NOT?: Maybe<AppointmentScalarWhereInput[] | AppointmentScalarWhereInput>;
+}
+
+export interface UserCreateWithoutAppointmentsInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  email?: Maybe<String>;
+  password: String;
   phone_number: Int;
+}
+
+export interface AppointmentUpsertWithWhereUniqueWithoutPostedByInput {
+  where: AppointmentWhereUniqueInput;
+  update: AppointmentUpdateWithoutPostedByDataInput;
+  create: AppointmentCreateWithoutPostedByInput;
+}
+
+export interface AppointmentUpdateInput {
+  time?: Maybe<DateTimeInput>;
+  service_description?: Maybe<String>;
+  postedBy?: Maybe<UserUpdateOneWithoutAppointmentsInput>;
 }
 
 export interface AppointmentWhereInput {
@@ -152,20 +428,6 @@ export interface AppointmentWhereInput {
   createdAt_lte?: Maybe<DateTimeInput>;
   createdAt_gt?: Maybe<DateTimeInput>;
   createdAt_gte?: Maybe<DateTimeInput>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
   time?: Maybe<DateTimeInput>;
   time_not?: Maybe<DateTimeInput>;
   time_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -188,56 +450,109 @@ export interface AppointmentWhereInput {
   service_description_not_starts_with?: Maybe<String>;
   service_description_ends_with?: Maybe<String>;
   service_description_not_ends_with?: Maybe<String>;
-  phone_number?: Maybe<Int>;
-  phone_number_not?: Maybe<Int>;
-  phone_number_in?: Maybe<Int[] | Int>;
-  phone_number_not_in?: Maybe<Int[] | Int>;
-  phone_number_lt?: Maybe<Int>;
-  phone_number_lte?: Maybe<Int>;
-  phone_number_gt?: Maybe<Int>;
-  phone_number_gte?: Maybe<Int>;
+  postedBy?: Maybe<UserWhereInput>;
   AND?: Maybe<AppointmentWhereInput[] | AppointmentWhereInput>;
   OR?: Maybe<AppointmentWhereInput[] | AppointmentWhereInput>;
   NOT?: Maybe<AppointmentWhereInput[] | AppointmentWhereInput>;
 }
 
-export interface AppointmentUpdateInput {
+export interface UserUpdateInput {
   name?: Maybe<String>;
-  time?: Maybe<DateTimeInput>;
-  service_description?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
   phone_number?: Maybe<Int>;
+  appointments?: Maybe<AppointmentUpdateManyWithoutPostedByInput>;
+}
+
+export interface UserUpdateManyMutationInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  phone_number?: Maybe<Int>;
+}
+
+export interface AppointmentCreateManyWithoutPostedByInput {
+  create?: Maybe<
+    | AppointmentCreateWithoutPostedByInput[]
+    | AppointmentCreateWithoutPostedByInput
+  >;
+  connect?: Maybe<AppointmentWhereUniqueInput[] | AppointmentWhereUniqueInput>;
 }
 
 export interface AppointmentUpdateManyMutationInput {
-  name?: Maybe<String>;
   time?: Maybe<DateTimeInput>;
   service_description?: Maybe<String>;
+}
+
+export interface AppointmentCreateWithoutPostedByInput {
+  id?: Maybe<ID_Input>;
+  time: DateTimeInput;
+  service_description: String;
+}
+
+export interface UserUpdateWithoutAppointmentsDataInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
   phone_number?: Maybe<Int>;
 }
 
-export interface AppointmentSubscriptionWhereInput {
+export interface AppointmentUpdateManyWithWhereNestedInput {
+  where: AppointmentScalarWhereInput;
+  data: AppointmentUpdateManyDataInput;
+}
+
+export interface UserSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<AppointmentWhereInput>;
-  AND?: Maybe<
-    AppointmentSubscriptionWhereInput[] | AppointmentSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    AppointmentSubscriptionWhereInput[] | AppointmentSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    AppointmentSubscriptionWhereInput[] | AppointmentSubscriptionWhereInput
-  >;
+  node?: Maybe<UserWhereInput>;
+  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
 
-export type AppointmentWhereUniqueInput = AtLeastOne<{
+export interface AppointmentUpdateWithoutPostedByDataInput {
+  time?: Maybe<DateTimeInput>;
+  service_description?: Maybe<String>;
+}
+
+export type UserWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
+  email?: Maybe<String>;
 }>;
 
 export interface NodeNode {
   id: ID_Output;
+}
+
+export interface UserPreviousValues {
+  id: ID_Output;
+  name: String;
+  email?: String;
+  password: String;
+  phone_number: Int;
+}
+
+export interface UserPreviousValuesPromise
+  extends Promise<UserPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  phone_number: () => Promise<Int>;
+}
+
+export interface UserPreviousValuesSubscription
+  extends Promise<AsyncIterator<UserPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  phone_number: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface AppointmentEdge {
@@ -259,6 +574,69 @@ export interface AppointmentEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
+export interface User {
+  id: ID_Output;
+  name: String;
+  email?: String;
+  password: String;
+  phone_number: Int;
+}
+
+export interface UserPromise extends Promise<User>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  phone_number: () => Promise<Int>;
+  appointments: <T = FragmentableArray<Appointment>>(args?: {
+    where?: AppointmentWhereInput;
+    orderBy?: AppointmentOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface UserSubscription
+  extends Promise<AsyncIterator<User>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  phone_number: () => Promise<AsyncIterator<Int>>;
+  appointments: <T = Promise<AsyncIterator<AppointmentSubscription>>>(args?: {
+    where?: AppointmentWhereInput;
+    orderBy?: AppointmentOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface UserNullablePromise
+  extends Promise<User | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  phone_number: () => Promise<Int>;
+  appointments: <T = FragmentableArray<Appointment>>(args?: {
+    where?: AppointmentWhereInput;
+    orderBy?: AppointmentOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
 export interface BatchPayload {
   count: Long;
 }
@@ -273,46 +651,6 @@ export interface BatchPayloadSubscription
   extends Promise<AsyncIterator<BatchPayload>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface Appointment {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  name: String;
-  time: DateTimeOutput;
-  service_description: String;
-  phone_number: Int;
-}
-
-export interface AppointmentPromise extends Promise<Appointment>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  name: () => Promise<String>;
-  time: () => Promise<DateTimeOutput>;
-  service_description: () => Promise<String>;
-  phone_number: () => Promise<Int>;
-}
-
-export interface AppointmentSubscription
-  extends Promise<AsyncIterator<Appointment>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  name: () => Promise<AsyncIterator<String>>;
-  time: () => Promise<AsyncIterator<DateTimeOutput>>;
-  service_description: () => Promise<AsyncIterator<String>>;
-  phone_number: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface AppointmentNullablePromise
-  extends Promise<Appointment | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  name: () => Promise<String>;
-  time: () => Promise<DateTimeOutput>;
-  service_description: () => Promise<String>;
-  phone_number: () => Promise<Int>;
 }
 
 export interface AppointmentSubscriptionPayload {
@@ -338,6 +676,41 @@ export interface AppointmentSubscriptionPayloadSubscription
   node: <T = AppointmentSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
   previousValues: <T = AppointmentPreviousValuesSubscription>() => T;
+}
+
+export interface Appointment {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  time: DateTimeOutput;
+  service_description: String;
+}
+
+export interface AppointmentPromise extends Promise<Appointment>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  time: () => Promise<DateTimeOutput>;
+  service_description: () => Promise<String>;
+  postedBy: <T = UserPromise>() => T;
+}
+
+export interface AppointmentSubscription
+  extends Promise<AsyncIterator<Appointment>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  time: () => Promise<AsyncIterator<DateTimeOutput>>;
+  service_description: () => Promise<AsyncIterator<String>>;
+  postedBy: <T = UserSubscription>() => T;
+}
+
+export interface AppointmentNullablePromise
+  extends Promise<Appointment | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  time: () => Promise<DateTimeOutput>;
+  service_description: () => Promise<String>;
+  postedBy: <T = UserPromise>() => T;
 }
 
 export interface AppointmentConnection {
@@ -384,6 +757,47 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
+export interface AppointmentPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  time: DateTimeOutput;
+  service_description: String;
+}
+
+export interface AppointmentPreviousValuesPromise
+  extends Promise<AppointmentPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  time: () => Promise<DateTimeOutput>;
+  service_description: () => Promise<String>;
+}
+
+export interface AppointmentPreviousValuesSubscription
+  extends Promise<AsyncIterator<AppointmentPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  time: () => Promise<AsyncIterator<DateTimeOutput>>;
+  service_description: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
 export interface AggregateAppointment {
   count: Int;
 }
@@ -400,57 +814,80 @@ export interface AggregateAppointmentSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface AppointmentPreviousValues {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  name: String;
-  time: DateTimeOutput;
-  service_description: String;
-  phone_number: Int;
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
 }
 
-export interface AppointmentPreviousValuesPromise
-  extends Promise<AppointmentPreviousValues>,
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  name: () => Promise<String>;
-  time: () => Promise<DateTimeOutput>;
-  service_description: () => Promise<String>;
-  phone_number: () => Promise<Int>;
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
 }
 
-export interface AppointmentPreviousValuesSubscription
-  extends Promise<AsyncIterator<AppointmentPreviousValues>>,
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  name: () => Promise<AsyncIterator<String>>;
-  time: () => Promise<AsyncIterator<DateTimeOutput>>;
-  service_description: () => Promise<AsyncIterator<String>>;
-  phone_number: () => Promise<AsyncIterator<Int>>;
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
-/*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
+}
+
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
+}
+
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
+}
+
+export interface UserEdge {
+  node: User;
+  cursor: String;
+}
+
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
+    Fragmentable {
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
 
 /*
 The `Boolean` scalar type represents `true` or `false`.
 */
 export type Boolean = boolean;
 
+export type Long = string;
+
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
 export type Int = number;
-
-/*
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
-*/
-export type ID_Input = string | number;
-export type ID_Output = string;
 
 /*
 DateTime scalar input type, allowing Date
@@ -462,7 +899,16 @@ DateTime scalar output type, which is always a string
 */
 export type DateTimeOutput = string;
 
-export type Long = string;
+/*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
+
+/*
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+*/
+export type ID_Input = string | number;
+export type ID_Output = string;
 
 /**
  * Model Metadata
@@ -471,6 +917,10 @@ export type Long = string;
 export const models: Model[] = [
   {
     name: "Appointment",
+    embedded: false
+  },
+  {
+    name: "User",
     embedded: false
   }
 ];
