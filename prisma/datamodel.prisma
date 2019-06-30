@@ -1,7 +1,7 @@
 type Appointment {
   id: ID! @id
   createdAt: DateTime! @createdAt
-  time: DateTime!
+  date_time: DateTime!
   service_description: String!
   postedBy: User
 }
@@ -9,7 +9,7 @@ type Appointment {
 type User {
   id: ID! @id
   name: String!
-  email: String @unique
+  email: String! @unique
   password: String!
   phone_number: Int!
   appointments: [Appointment!]!

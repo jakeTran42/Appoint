@@ -3,14 +3,27 @@ type Query {
 }
 
 type Mutation {
-    
+    post(date_time: String!, service_description: String!): Appointment!
+    signup(email: String!, password: String!, name: String!): AuthPayload
+    login(email: String!, password: String!): AuthPayload
 }
 
 type Appointment {
   id: ID!
-  name: String!
-  time: String!
+  date_time: String!
   service_description: String!
+  postedBy: User
+}
+
+type AuthPayload {
+  token: String
+  user: User
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
   phone_number: Int!
-  postedBy: [User]
+  appointments: [Appointment!]!
 }
