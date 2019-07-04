@@ -40,7 +40,17 @@ async function login(parent, args, context, info) {
     }
 }
 
+function post(parent, args, context, info) {
+    const userId = getUserId(context)
+    return context.prisma.createAppointment({
+      date_time: args.date_time,
+      service_description: args.service_description,
+      postedBy: { connect: { id: userId } },
+    })
+}
+
 module.exports = {
     signup,
     login,
+    post,
 }
