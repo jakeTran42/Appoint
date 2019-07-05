@@ -12,5 +12,5 @@ type User {
   email: String! @unique
   password: String!
   phone_number: Int!
-  appointments: [Appointment!]!
+  appointments: [Appointment!]! @relation(link: INLINE)
 }

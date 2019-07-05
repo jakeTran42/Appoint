@@ -4,7 +4,7 @@ type Query {
 
 type Mutation {
     post(date_time: String!, service_description: String!): Appointment!
-    signup(email: String!, password: String!, name: String!): AuthPayload
+    signup(name: String!, email: String!, password: String!, phone_number: Int!): AuthPayload
     login(email: String!, password: String!): AuthPayload
 }
 
