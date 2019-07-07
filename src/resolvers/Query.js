@@ -1,7 +1,7 @@
-function feed(parent, args, context, info) {
+function appointmentFeed(parent, args, context, info) {
     return context.prisma.appointments()
 }
 
 module.exports = {
-    feed,
+    appointmentFeed,
 }

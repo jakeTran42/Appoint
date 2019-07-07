@@ -1,15 +1,16 @@
 type Query {
-  feed: [Appointment!]!
+  appointmentFeed: [Appointment!]!
 }
 
 type Mutation {
     post(date_time: String!, service_description: String!): Appointment!
-    signup(name: String!, email: String!, password: String!, phone_number: Int!): AuthPayload
+    signup(name: String!, email: String!, password: String!, phone_number: String!): AuthPayload
     login(email: String!, password: String!): AuthPayload
 }
 
 type Appointment {
   id: ID!
+  createdAt: String
   date_time: String!
   service_description: String!
   postedBy: User
