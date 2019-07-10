@@ -31,7 +31,7 @@
 
 * You can use the schema definition (on the right of playground) as documentation for any query,muation,subscription event
 
-![Schema](/usage/schema.png)
+![Schema](/usage/schema.PNG)
 
 * Querying Data
 ![Querying events](/usage/query.png)
