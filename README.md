@@ -23,6 +23,7 @@
    2. If you have Docker Toolbox, then launch Docker Quick Start, and then follow [**these**](https://www.prisma.io/docs/get-started/01-setting-up-prisma-new-database-TYPESCRIPT-t002/) instructions.
 4. Go to root directory and run ```prisma deploy``` in terminal. **This project will use a demo server hosted by AWS Aurora**
 5. In terminal enter ```node src/index.js``` while in root directory. (you need to stop this process and restart it everytime changes are made in files)
+6. Create a ```.env``` file in root directory and type ```APP_SECRET=_____```. Replace ```____``` with any string you want. This is environment configuration file to ensure passwords are secured.
 
 ### Usages
 
